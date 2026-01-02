@@ -2,21 +2,22 @@
 function initMap() {
     if (typeof ymaps !== 'undefined') {
         ymaps.ready(function () {
-            var coords = [55.755905, 37.650927];
+            var markerCoords = [55.755905, 37.650927];
             
             var map = new ymaps.Map('yandex-map', {
-                center: coords,
+                center: markerCoords,
                 zoom: 17,
                 controls: ['zoomControl', 'fullscreenControl']
             });
 
-            var placemark = new ymaps.Placemark(coords, {
+            var placemark = new ymaps.Placemark(markerCoords, {
                 balloonContent: '<strong>Asakusa Lab</strong><br>Казарменный переулок, 8с2<br>вход с зеленым фонарем'
             }, {
                 preset: 'islands#greenDotIcon'
             });
 
             map.geoObjects.add(placemark);
+            map.setCenter(markerCoords, 17);
         });
     }
 }

@@ -329,17 +329,13 @@ a:hover {
 }
 
 .product-link {
-    padding: 0.4rem 0.5rem;
+    padding: 0.4rem 0.3rem;
     border: 1px solid var(--color-primary);
     border-radius: 4px;
-    font-size: 0.75rem;
+    font-size: 0.65rem;
     text-align: center;
     transition: all 0.3s var(--transition-smooth);
-    flex: 1;
-    min-width: 70px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    flex: 1 1 0;
 }
 
 .product-link:hover {
