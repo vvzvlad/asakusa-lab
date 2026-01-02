@@ -471,6 +471,10 @@ footer {
     margin-bottom: 1rem;
 }
 
+.footer-content .footer-section:last-child {
+    text-align: right;
+}
+
 .footer-section h3 {
     color: var(--color-primary);
     font-size: 0.9rem;
@@ -505,18 +509,19 @@ footer {
     padding-top: 0.75rem;
     border-top: 1px solid rgba(45, 73, 31, 0.2);
     text-align: center;
-    color: #444;
-    font-size: 0.5rem;
+    color: #555;
 }
 
 .footer-bottom p {
     margin-bottom: 0.1rem;
     line-height: 1.2;
+    font-size: 0.5rem;
+    color: #444;
 }
 
 .footer-bottom .legal-info {
-    font-size: 0.45rem;
-    color: #3a3a3a;
+    font-size: 0.7rem;
+    color: #666;
     margin-bottom: 0.15rem;
 }
 
