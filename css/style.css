@@ -346,13 +346,37 @@ a:hover {
 
 .pricing-category h2 {
     margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.pricing-category p {
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+}
+
+.price-list {
+    margin-top: 1.5rem;
+    padding: 1rem 1.25rem;
+    background: rgba(90, 154, 74, 0.1);
+    border-radius: 6px;
+    border-left: 3px solid var(--color-primary);
+}
+
+.price-list p {
+    margin-bottom: 0.4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price-list p:last-child {
+    margin-bottom: 0;
 }
 
 .price {
-    font-size: 2rem;
     color: var(--color-primary);
-    font-weight: 500;
-    margin-top: 1rem;
+    font-weight: 600;
+    font-size: 1.1rem;
 }
 
 /* Order Section */
