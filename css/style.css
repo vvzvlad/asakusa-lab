@@ -223,6 +223,58 @@ a:hover {
     margin-left: 1.5rem;
 }
 
+.equipment-category .category-intro {
+    margin-bottom: 1.5rem;
+    font-style: italic;
+}
+
+.equipment-item {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(74, 122, 58, 0.2);
+}
+
+.equipment-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.equipment-item h3 {
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.equipment-item p {
+    margin-bottom: 0.5rem;
+}
+
+.equipment-item a {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+.equipment-item a:hover {
+    color: var(--color-accent);
+}
+
+.equipment-specs {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: rgba(74, 122, 58, 0.1);
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+}
+
+.equipment-specs p {
+    margin-bottom: 0.25rem;
+}
+
+.equipment-specs p:last-child {
+    margin-bottom: 0;
+}
+
 /* Location Section */
 .location-info {
     margin-bottom: 3rem;
