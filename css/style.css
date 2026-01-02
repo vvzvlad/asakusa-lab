@@ -9,7 +9,7 @@
     --color-bg: #000000;
     --color-primary: #2D491F;
     --color-text: #FFFFFF;
-    --color-text-secondary: #E0E0E0;
+    --color-text-secondary: #F0F0F0;
     --color-accent: #3A5F28;
     --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
