@@ -2,28 +2,21 @@
 function initMap() {
     if (typeof ymaps !== 'undefined') {
         ymaps.ready(function () {
+            var coords = [55.755905, 37.650927];
+            
             var map = new ymaps.Map('yandex-map', {
-                center: [55.758574, 37.656854],
-                zoom: 16,
+                center: coords,
+                zoom: 17,
                 controls: ['zoomControl', 'fullscreenControl']
             });
 
-            var placemark = new ymaps.Placemark([55.758574, 37.656854], {
+            var placemark = new ymaps.Placemark(coords, {
                 balloonContent: '<strong>Asakusa Lab</strong><br>Казарменный переулок, 8с2<br>вход с зеленым фонарем'
             }, {
                 preset: 'islands#greenDotIcon'
             });
 
             map.geoObjects.add(placemark);
-            
-            // Geocode address to get exact coordinates
-            ymaps.geocode('Москва, Казарменный переулок, 8с2').then(function (res) {
-                var firstGeoObject = res.geoObjects.get(0);
-                var coords = firstGeoObject.geometry.getCoordinates();
-                
-                map.setCenter(coords, 16);
-                placemark.geometry.setCoordinates(coords);
-            });
         });
     }
 }
