@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Asakusa Lab - керамическая студия и сообщество керамистов в Москве">
+    <title>Asakusa Lab - Керамическая студия</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=YOUR_API_KEY&lang=ru_RU" type="text/javascript"></script>
+</head>
+<body>
+    <!-- Screen 1: Hero -->
+    <section id="hero" class="screen">
+        <div class="container">
+            <div class="hero-content">
+                <img src="IMG_0700 (1).PNG" alt="Asakusa Lab" class="logo">
+                <p class="tagline">
+                    Мы — сообщество людей, увлечённых керамикой и глазурями, которые сделали это своим основным хобби. 
+                    Мы делаем всё, чтобы этим было заниматься как можно более удобно и продуктивно.
+                </p>
+                <nav class="main-nav">
+                    <a href="#about" class="nav-link">О нас</a>
+                    <a href="#equipment" class="nav-link">Наше оборудование</a>
+                    <a href="#location" class="nav-link">Где мы находимся</a>
+                    <a href="#pricing" class="nav-link">Цены и условия</a>
+                    <a href="#order" class="nav-link">Заказать разработку</a>
+                    <a href="#production" class="nav-link">Наше производство</a>
+                </nav>
+                <div class="scroll-down">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M12 19L19 12M12 19L5 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screen 2: About -->
+    <section id="about" class="screen">
+        <div class="container">
+            <h1 class="section-title">О нас</h1>
+            <div class="content">
+                <p>Мы — керамическая студия и сообщество керамистов, расположенное в Москве.</p>
+                
+                <p>Наша студия — это пространство, где профессионалы и любители керамики находят всё необходимое 
+                для творчества и развития своих навыков. Мы создали место, объединяющее единомышленников, 
+                увлечённых искусством керамики и науки о глазурях.</p>
+                
+                <p>У нас есть собственная база для производства глазурей, современное оборудование 
+                и комфортная атмосфера для работы.</p>
+                
+                <div class="social-links">
+                    <p>Присоединяйтесь к нам в социальных сетях:</p>
+                    <ul>
+                        <li><a href="https://t.me/asakusalab" target="_blank">Наш канал в Телеграме</a></li>
+                        <li><a href="#" target="_blank">Instagram</a></li>
+                        <li><a href="#" target="_blank">VK</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screen 3: Equipment -->
+    <section id="equipment" class="screen">
+        <div class="container">
+            <h1 class="section-title">Наше оборудование</h1>
+            <div class="content equipment-content">
+                
+                <div class="equipment-category">
+                    <h2>Печи для обжига</h2>
+                    <ul>
+                        <li><strong>Большая печь:</strong> 80 литров</li>
+                        <li><strong>Маленькая (быстрая) печь:</strong> 10 литров
+                            <ul>
+                                <li>Время обжига: ~10 часов</li>
+                                <li>Возможность проводить 2 обжига в день</li>
+                                <li>Идеальна для тестирования и прототипирования</li>
+                            </ul>
+                        </li>
+                        <li><strong>Контроллеры собственного производства:</strong> позволяют программировать процесс обжига 
+                        и отслеживать реальный график нагрева для отладки</li>
+                    </ul>
+                </div>
+
+                <div class="equipment-category">
+                    <h2>Гончарный круг</h2>
+                    <ul>
+                        <li>2 гончарных круга <strong>iMold Professional V3</strong> (последних версий)</li>
+                        <li>Характеристика: мощные, тихие, надежные профессиональные аппараты</li>
+                        <li>Выбор качества: студия отдает приоритет лучшему оборудованию</li>
+                    </ul>
+                </div>
+
+                <div class="equipment-category">
+                    <h2>Глазури и их компоненты</h2>
+                    <ul>
+                        <li>Собственная база для производства глазурей</li>
+                        <li>Обширный запас компонентов для глазурей</li>
+                        <li>Обратный осмос (для подготовки воды для глазурей для отсутствия оксидов железа)</li>
+                    </ul>
+                </div>
+
+                <div class="equipment-category">
+                    <h2>Оборудование для приготовления и хранения</h2>
+                    <ul>
+                        <li>Много места для хранения материалов</li>
+                        <li>Большая удобная раковина с ринзером для мытья баночек</li>
+                        <li>Фильтры-воронки для переливания</li>
+                        <li>Мешалки (собственного производства)</li>
+                    </ul>
+                </div>
+
+                <div class="equipment-category">
+                    <h2>Вытяжка и вентиляция</h2>
+                    <ul>
+                        <li>Вытяжка для печи (позволяет работать во время обжига без неприятных запахов)</li>
+                    </ul>
+                </div>
+
+                <div class="equipment-category">
+                    <h2>Покрасочное оборудование</h2>
+                    <ul>
+                        <li>Покрасочная камера</li>
+                        <li>Несколько краскопультов</li>
+                        <li>Компрессор (большой, но тихий) — позволяет красить много изделий повторяемо</li>
+                    </ul>
+                </div>
+
+                <div class="equipment-category">
+                    <h2>Литьё в гипсовые формы (Slip casting)</h2>
+                    <ul>
+                        <li>Большая мешалка для шликера (жидкая керамическая масса для литья)</li>
+                        <li>Стол для литья</li>
+                        <li>База для производства гипсовых форм</li>
+                        <li>Полный цикл: от создания формы до литья</li>
+                    </ul>
+                </div>
+
+                <div class="equipment-category">
+                    <h2>3D-печать и цифровое литьё</h2>
+                    <p><strong>Несколько 3D-принтеров</strong> для:</p>
+                    <ul>
+                        <li>Печати вспомогательных инструментов</li>
+                        <li>Печати вырубок</li>
+                        <li>Печати штампов</li>
+                        <li>Печати индивидуальных маркировочных штампов для керамистов</li>
+                    </ul>
+                    
+                    <p><strong>Технология "Цифровое литьё" (Digital Casting):</strong></p>
+                    <ul>
+                        <li>Процесс: 3D-модель → печать формы на 3D-принтере → создание силиконовой формы → 
+                        тиражирование гипсовых форм → литьё шликера в формы</li>
+                        <li>Позволяет производить неограниченное количество идентичных гипсовых форм на основе одной печатной формы</li>
+                        <li><strong>Курсы по цифровому литью</strong> проводятся в студии</li>
+                    </ul>
+                </div>
+
+                <div class="equipment-category">
+                    <h2>Вспомогательные пространства</h2>
+                    <ul>
+                        <li><strong>Чистая зона:</strong> помещение без пыли для работы за ноутбуком и отдыха на диване</li>
+                        <li><strong>Фотозона:</strong> оборудована лайтбоксом для фотографирования готовых изделий</li>
+                        <li><strong>Выставочная зона:</strong> небольшая выставочная галерея в коридоре, 
+                        где керамисты могут выставить свои работы для демонстрации посетителям</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Screen 4: Location -->
+    <section id="location" class="screen">
+        <div class="container">
+            <h1 class="section-title">Где мы находимся</h1>
+            <div class="content">
+                <div class="location-info">
+                    <p><strong>Адрес:</strong> Казарменный переулок, 8с2, вход с зеленым фонарем</p>
+                    <p><strong>Метро:</strong> Курская (10 минут пешком)</p>
+                    <p><strong>Контакты:</strong></p>
+                    <ul>
+                        <li>Телефон: <a href="tel:+79951500510">+7 (995) 150-05-10</a></li>
+                        <li>Email: <a href="mailto:mail@asakusa-lab.cc">mail@asakusa-lab.cc</a></li>
+                    </ul>
+                </div>
+                <div id="yandex-map" style="width: 100%; height: 400px; margin-top: 2rem; border-radius: 8px;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screen 5: Pricing -->
+    <section id="pricing" class="screen">
+        <div class="container">
+            <h1 class="section-title">Цены и условия</h1>
+            <div class="content">
+                <div class="pricing-category">
+                    <h2>Коворкинг</h2>
+                    <p>Часовой/дневной доступ к студии и оборудованию</p>
+                    <p class="price">[Цена будет добавлена]</p>
+                </div>
+
+                <div class="pricing-category">
+                    <h2>Резиденция</h2>
+                    <p>Долгосрочное пребывание в студии</p>
+                    <p class="price">[Цена будет добавлена]</p>
+                </div>
+
+                <div class="pricing-category">
+                    <h2>Условия использования оборудования</h2>
+                    <p>[Условия будут добавлены]</p>
+                </div>
+
+                <div class="pricing-category">
+                    <h2>Курсы</h2>
+                    <p>Включая курсы по цифровому литью</p>
+                    <p class="price">[Цены будут добавлены]</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screen 6: Order -->
+    <section id="order" class="screen">
+        <div class="container">
+            <h1 class="section-title">Заказать разработку</h1>
+            <div class="content">
+                <p>Мы предлагаем услуги по разработке керамических изделий.</p>
+                
+                <h2>Процесс заказа</h2>
+                <p>[Описание процесса будет добавлено]</p>
+                
+                <h2>Примеры работ</h2>
+                <p>[Галерея работ будет добавлена]</p>
+                
+                <div class="contact-form-placeholder">
+                    <h2>Свяжитесь с нами</h2>
+                    <p>Для заказа разработки свяжитесь с нами:</p>
+                    <ul>
+                        <li>Телефон: [телефон]</li>
+                        <li>Email: [email]</li>
+                        <li>Telegram: [telegram]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screen 7: Production -->
+    <section id="production" class="screen">
+        <div class="container">
+            <h1 class="section-title">Наше производство</h1>
+            <div class="content production-content">
+                
+                <div class="product-card">
+                    <div class="product-image-placeholder">
+                        [Фото]
+                    </div>
+                    <h3>Воронки</h3>
+                    <p>Фильтры-воронки для переливания глазурей (наше производство)</p>
+                    <div class="product-links">
+                        <a href="#" class="product-link">Wildberries</a>
+                        <a href="#" class="product-link">Озон</a>
+                        <a href="#" class="product-link">Наш магазин</a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image-placeholder">
+                        [Фото]
+                    </div>
+                    <h3>Мешалки</h3>
+                    <p>Мешалки для глазурей (наше производство)</p>
+                    <div class="product-links">
+                        <a href="#" class="product-link">Wildberries</a>
+                        <a href="#" class="product-link">Озон</a>
+                        <a href="#" class="product-link">Наш магазин</a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image-placeholder">
+                        [Фото]
+                    </div>
+                    <h3>Гипсовые формы</h3>
+                    <p>Формы для литья (наше производство)</p>
+                    <div class="product-links">
+                        <a href="#" class="product-link">Wildberries</a>
+                        <a href="#" class="product-link">Озон</a>
+                        <a href="#" class="product-link">Наш магазин</a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image-placeholder">
+                        [Фото]
+                    </div>
+                    <h3>Логгеры для печей</h3>
+                    <p>Устройства для записи графиков обжига</p>
+                    <div class="product-links">
+                        <a href="#" class="product-link">Wildberries</a>
+                        <a href="#" class="product-link">Озон</a>
+                        <a href="#" class="product-link">Наш магазин</a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image-placeholder">
+                        [Фото]
+                    </div>
+                    <h3>Контроллеры для печей</h3>
+                    <p>Контроллеры собственного производства для управления обжигом</p>
+                    <div class="product-links">
+                        <a href="#" class="product-link">Wildberries</a>
+                        <a href="#" class="product-link">Озон</a>
+                        <a href="#" class="product-link">Наш магазин</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Asakusa Lab</h3>
+                <p>Керамическая студия и сообщество керамистов в Москве</p>
+                <p>Казарменный переулок, 8с2</p>
+                <p>10 минут от метро Курская</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Контакты</h3>
+                <a href="tel:+79951500510">+7 (995) 150-05-10</a>
+                <a href="mailto:mail@asakusa-lab.cc">mail@asakusa-lab.cc</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Социальные сети</h3>
+                <a href="#" target="_blank">Telegram</a>
+                <a href="#" target="_blank">Instagram</a>
+                <a href="#" target="_blank">VK</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Информация</h3>
+                <p>ИП Зайцев</p>
+                <p>ИНН 00000</p>
+                <p>ОГРН 0000</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2025 Asakusa Lab. Все права защищены.</p>
+            <p>Сайт создан с помощью Cursor + Claude</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
+
