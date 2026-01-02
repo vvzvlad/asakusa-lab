@@ -6,9 +6,9 @@
 }
 
 :root {
-    --color-bg: #0a0a0a;
-    --color-bg-elevated: #141414;
-    --color-bg-card: #1a1a1a;
+    --color-bg: #111111;
+    --color-bg-elevated: #181818;
+    --color-bg-card: #1e1e1e;
     --color-primary: #5A9A4A;
     --color-text: #FFFFFF;
     --color-text-secondary: #E8E8E8;
@@ -25,8 +25,10 @@ body {
     font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     background-color: var(--color-bg);
     background-image: 
-        radial-gradient(circle at 25% 25%, rgba(90, 154, 74, 0.03) 0%, transparent 50%),
-        radial-gradient(circle at 75% 75%, rgba(90, 154, 74, 0.02) 0%, transparent 50%),
+        radial-gradient(circle at 25% 25%, rgba(90, 154, 74, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(90, 154, 74, 0.04) 0%, transparent 50%),
+        repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(90, 154, 74, 0.015) 50px, rgba(90, 154, 74, 0.015) 51px),
+        repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(90, 154, 74, 0.015) 50px, rgba(90, 154, 74, 0.015) 51px),
         url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%235A9A4A' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     color: var(--color-text);
     line-height: 1.4;
@@ -476,11 +478,11 @@ footer {
 .footer-bottom {
     max-width: 1200px;
     margin: 0 auto;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(45, 73, 31, 0.3);
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(45, 73, 31, 0.2);
     text-align: center;
-    color: #666;
-    font-size: 0.55rem;
+    color: #444;
+    font-size: 0.5rem;
 }
 
 .footer-bottom p {
@@ -489,9 +491,9 @@ footer {
 }
 
 .footer-bottom .legal-info {
-    font-size: 0.5rem;
-    color: #555;
-    margin-bottom: 0.2rem;
+    font-size: 0.45rem;
+    color: #3a3a3a;
+    margin-bottom: 0.15rem;
 }
 
 /* Responsive Design */
