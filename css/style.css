@@ -35,12 +35,17 @@ body {
 
 /* Screen Layout */
 .screen {
-    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px 20px;
+    padding: 60px 20px;
     position: relative;
+}
+
+#hero {
+    min-height: 100vh;
+    padding: 40px 20px;
+    text-align: center;
 }
 
 .container {
@@ -104,10 +109,6 @@ a:hover {
 }
 
 /* Hero Section */
-#hero {
-    text-align: center;
-}
-
 .hero-content {
     display: flex;
     flex-direction: column;
@@ -156,19 +157,6 @@ a:hover {
 .scroll-down {
     color: var(--color-primary);
     cursor: pointer;
-    animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-    }
-    40% {
-        transform: translateY(-10px);
-    }
-    60% {
-        transform: translateY(-5px);
-    }
 }
 
 /* About Section */
@@ -177,31 +165,20 @@ a:hover {
     margin: 0 auto;
 }
 
-.social-links {
-    margin-top: 3rem;
-    padding: 2rem;
-    border-top: 1px solid var(--color-primary);
-}
-
-.social-links ul {
-    list-style: none;
-    display: flex;
-    gap: 2rem;
-    justify-content: center;
-    margin-top: 1rem;
-}
-
-.social-links a {
-    font-size: 1.1rem;
-    padding: 0.5rem 1rem;
-    border: 1px solid var(--color-primary);
-    border-radius: 4px;
+.telegram-btn {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--color-primary);
+    color: var(--color-text);
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
     transition: all 0.3s var(--transition-smooth);
 }
 
-.social-links a:hover {
-    background-color: var(--color-primary);
-    color: var(--color-text);
+.telegram-btn:hover {
+    background: var(--color-accent);
 }
 
 /* Equipment Section */
@@ -211,57 +188,20 @@ a:hover {
 }
 
 .equipment-category {
-    background: var(--color-bg-elevated);
-    border-radius: 12px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    border: 1px solid var(--color-border);
-    position: relative;
-    overflow: hidden;
+    margin-bottom: 2.5rem;
 }
 
-.equipment-category::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+.equipment-category:last-child {
+    margin-bottom: 0;
 }
 
 .equipment-category h2 {
     margin-top: 0;
-    margin-bottom: 1.5rem;
-    font-size: 1.6rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.equipment-category h2::before {
-    content: '';
-    display: inline-block;
-    width: 48px;
-    height: 48px;
-    background-color: var(--color-primary);
-    border-radius: 8px;
-    flex-shrink: 0;
-}
-
-.equipment-category[data-icon="kiln"] h2::before {
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-7-2h2v-4h4v-2h-4V7h-2v4H8v2h4z'/%3E%3C/svg%3E") center/contain no-repeat;
-    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-7-2h2v-4h4v-2h-4V7h-2v4H8v2h4z'/%3E%3C/svg%3E") center/contain no-repeat;
-}
-
-.equipment-category[data-icon="glaze"] h2::before {
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z'/%3E%3C/svg%3E") center/contain no-repeat;
-    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z'/%3E%3C/svg%3E") center/contain no-repeat;
-}
-
-.equipment-category[data-icon="wheel"] h2::before {
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z'/%3E%3C/svg%3E") center/contain no-repeat;
-    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z'/%3E%3C/svg%3E") center/contain no-repeat;
+    margin-bottom: 1.25rem;
+    font-size: 1.4rem;
+    color: var(--color-primary);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 0.75rem;
 }
 
 .equipment-category ul {
@@ -347,6 +287,15 @@ a:hover {
 
 .equipment-specs p {
     margin-bottom: 0.3rem;
+    padding-left: 1rem;
+    position: relative;
+}
+
+.equipment-specs p::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
 }
 
 .equipment-specs p:last-child {
@@ -523,19 +472,19 @@ footer {
     padding-top: 1rem;
     border-top: 1px solid rgba(45, 73, 31, 0.3);
     text-align: center;
-    color: var(--color-text-secondary);
-    font-size: 0.75rem;
+    color: #777;
+    font-size: 0.65rem;
 }
 
 .footer-bottom p {
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.15rem;
     line-height: 1.3;
 }
 
 .footer-bottom .legal-info {
-    font-size: 0.6rem;
-    color: #888;
-    margin-bottom: 0.5rem;
+    font-size: 0.55rem;
+    color: #666;
+    margin-bottom: 0.3rem;
 }
 
 /* Responsive Design */
@@ -612,12 +561,6 @@ footer {
     .equipment-category {
         padding: 1rem;
         padding-left: 1rem;
-    }
-    
-    .social-links ul {
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
     }
     
     .production-content {
