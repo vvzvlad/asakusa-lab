@@ -47,22 +47,67 @@ jobs:
         docker build --pull . --file Dockerfile --tag "$LOCAL_TAG"
 
     - name: Smoke-test the built image
-      # There are no unit tests in this repo, so this is the whole PR gate:
-      # running inside the image checks the things a build alone cannot — that
-      # the dependencies actually installed, that app.py imports, and that the
-      # index route renders from the templates copied into the image.
-      # No port publishing — the runner does not need to reach into the
-      # container, Flask's own test client drives the app from the inside.
+      # There are no unit tests in this repo, so this is the whole PR gate. It runs
+      # the exact same ci/smoke.py against the exact same kind of container as
+      # image-check-publish.yml — only on the local tag, with no login and no push.
+      # Keeping the script in one file is the point: two copies of it would drift,
+      # and the PR gate would stop matching the gate that guards prod.
+      #
+      # The container starts with the image's OWN command — no `--entrypoint`,
+      # which would also drop the image's CMD and leave "does the container even
+      # start" untested (this image has no ENTRYPOINT, only CMD).
+      #
+      # Nothing is published to the host: the checks run from inside via
+      # `docker exec`, so parallel runs on this shared daemon cannot collide on a
+      # host port. The container name carries the run id for the same reason.
       env:
         SMOKE_TAG: ${{ steps.tags.outputs.local }}
+        NAME: asakusa-lab-pr-check-${{ github.run_id }}
       run: |
-        docker run --rm --entrypoint python "$SMOKE_TAG" -c "
-        import app
-        client = app.app.test_client()
-        response = client.get('/')
-        assert response.status_code == 200, response.status_code
-        print('smoke ok:', response.status_code)
-        "
+        docker run -d --name "$NAME" "$SMOKE_TAG"
+
+        # Poll instead of sleeping a guessed amount: a sleep long enough to be safe
+        # is wasted on every run, and a short one turns a slow start into a flake.
+        ready=""
+        for _ in $(seq 1 30); do
+          if docker exec "$NAME" python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5000/', timeout=2)" >/dev/null 2>&1; then
+            ready=1
+            break
+          fi
+          # A container that has already exited will never become ready — report it
+          # now rather than sitting out the whole timeout.
+          if [ "$(docker inspect -f '{{.State.Running}}' "$NAME")" != "true" ]; then
+            break
+          fi
+          sleep 1
+        done
+
+        if [ -z "$ready" ]; then
+          echo "container never answered on 127.0.0.1:5000 (it exited, or it stayed silent for 30s); container logs:"
+          # Without this there is nothing left to diagnose from: the cleanup step
+          # below removes the container.
+          docker logs "$NAME"
+          exit 1
+        fi
+
+        # Fed over stdin, so the image does not have to carry the test file and the
+        # very same script can be run by hand against a local container.
+        if ! docker exec -i "$NAME" python - < ci/smoke.py; then
+          echo "smoke failed; container logs:"
+          docker logs "$NAME"
+          exit 1
+        fi
+
+    - name: Remove the smoke container from the runner
+      # `always()`, and before the image cleanup below: cirunner-hatbox has one
+      # persistent docker daemon shared by every repository, so a container left
+      # behind by a failed run would sit there forever — and would also pin the
+      # image, making the `docker rmi` in the next step fail.
+      if: always()
+      env:
+        NAME: asakusa-lab-pr-check-${{ github.run_id }}
+      run: |
+        docker rm -f "$NAME" || true
 
     - name: Remove the built image from the runner
       # The runner's docker daemon is persistent and shared with other repos, so

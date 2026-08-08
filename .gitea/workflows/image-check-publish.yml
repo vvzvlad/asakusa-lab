@@ -34,16 +34,6 @@ jobs:
     steps:
     - uses: actions/checkout@v7
 
-    - name: Log in to the Gitea container registry
-      uses: docker/login-action@v4
-      with:
-        registry: gitea.vvzvlad.xyz
-        username: ${{ github.repository_owner }}
-        # PAT with the `write:package` scope, stored as an organisation secret on
-        # `projects` and inherited here. The built-in GITEA_TOKEN cannot be used —
-        # it carries no package scope.
-        password: ${{ secrets.REGISTRY_TOKEN }}
-
     - name: Compute image tags
       id: tags
       # main -> :latest + :<sha> (watchtower deploys :latest); ANY other branch -> :<branch>.
@@ -105,23 +95,71 @@ jobs:
     - name: Smoke-test the built image
       # There are no unit tests in this repo, so this is the only gate before
       # :latest goes live — watchtower on slug picks it up within two minutes.
-      # Running inside the image checks the things a build alone cannot: that
-      # the dependencies actually installed, that app.py imports, and that the
-      # index route renders from the templates copied into the image.
       # It sits BETWEEN build and push on purpose: a red smoke means nothing
       # ever reaches the registry, so prod keeps serving the previous image.
-      # No port publishing — the runner does not need to reach into the
-      # container, Flask's own test client drives the app from the inside.
+      #
+      # The container is started with the image's OWN command — no `--entrypoint`,
+      # which does not merely replace the entrypoint but also DROPS the image's
+      # CMD. This image has no ENTRYPOINT at all, only `CMD ["python", "app.py"]`,
+      # so the previous version of this step never once checked that the container
+      # starts: a broken `__main__` block, a bad WORKDIR or a typo in CMD would
+      # have shipped green.
+      #
+      # Nothing is published to the host: the checks run from inside the container
+      # via `docker exec`, so parallel runs on this shared daemon cannot collide on
+      # a host port. The container name carries the run id for the same reason.
       env:
         SMOKE_TAG: ${{ steps.tags.outputs.smoke }}
+        NAME: asakusa-smoke-${{ github.run_id }}
       run: |
-        docker run --rm --entrypoint python "$SMOKE_TAG" -c "
-        import app
-        client = app.app.test_client()
-        response = client.get('/')
-        assert response.status_code == 200, response.status_code
-        print('smoke ok:', response.status_code)
-        "
+        docker run -d --name "$NAME" "$SMOKE_TAG"
+
+        # Poll instead of sleeping a guessed amount: a sleep long enough to be safe
+        # is wasted on every run, and a short one turns a slow start into a flake.
+        ready=""
+        for _ in $(seq 1 30); do
+          if docker exec "$NAME" python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5000/', timeout=2)" >/dev/null 2>&1; then
+            ready=1
+            break
+          fi
+          # A container that has already exited will never become ready — report it
+          # now rather than sitting out the whole timeout.
+          if [ "$(docker inspect -f '{{.State.Running}}' "$NAME")" != "true" ]; then
+            break
+          fi
+          sleep 1
+        done
+
+        if [ -z "$ready" ]; then
+          echo "container never answered on 127.0.0.1:5000 (it exited, or it stayed silent for 30s); container logs:"
+          # Without this there is nothing left to diagnose from: the cleanup step
+          # below removes the container.
+          docker logs "$NAME"
+          exit 1
+        fi
+
+        # Fed over stdin, so the image does not have to carry the test file and the
+        # very same script can be run by hand against a local container.
+        if ! docker exec -i "$NAME" python - < ci/smoke.py; then
+          echo "smoke failed; container logs:"
+          docker logs "$NAME"
+          exit 1
+        fi
+
+    - name: Log in to the Gitea container registry
+      # Deliberately placed here and not at the top of the job: `docker build` runs
+      # arbitrary RUN instructions from the Dockerfile and the smoke step runs the
+      # image's own code, both on a runner whose docker.sock is the host's. Logging
+      # in only now keeps the registry credentials out of the job's docker config
+      # for the whole build-and-test stretch.
+      uses: docker/login-action@v4
+      with:
+        registry: gitea.vvzvlad.xyz
+        username: ${{ github.repository_owner }}
+        # PAT with the `write:package` scope, stored as an organisation secret on
+        # `projects` and inherited here. The built-in GITEA_TOKEN cannot be used —
+        # it carries no package scope.
+        password: ${{ secrets.REGISTRY_TOKEN }}
 
     - name: Push Docker images
       env:
@@ -130,6 +168,17 @@ jobs:
         TAGS: ${{ steps.tags.outputs.tags }}
       run: |
         for tag in $TAGS; do docker push "$tag"; done
+
+    - name: Remove the smoke container from the runner
+      # `always()`, and before the image cleanup below: cirunner-hatbox has one
+      # persistent docker daemon shared by every repository, so a container left
+      # behind by a failed run would sit there forever — and would also pin the
+      # image, making the `docker rmi` in the next step fail.
+      if: always()
+      env:
+        NAME: asakusa-smoke-${{ github.run_id }}
+      run: |
+        docker rm -f "$NAME" || true
 
     - name: Remove the built images from the runner
       # The runner's docker daemon is persistent, so the images built here would
