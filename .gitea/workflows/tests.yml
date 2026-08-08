@@ -1,0 +1,76 @@
+name: Tests
+
+# PR gate. This workflow deliberately never logs in to the registry and never
+# pushes: it does not reference `secrets` at all. It proves that the image still
+# builds and that the app still starts, while :latest — the tag watchtower on
+# slug deploys to asakusa-lab.cc — stays untouched by PR branches.
+on:
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read   # checkout
+
+# Nothing here is published, so a superseded run has no value: when a PR gets a
+# new push, kill the in-flight check and run the fresh head instead. This is the
+# opposite of image-check-publish.yml, where cancelling would leave holes in the
+# :<sha> tag history.
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-smoke:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v7
+
+    - name: Compute the local image tag
+      id: tags
+      # A purely local tag: no registry host in front of it, so there is nothing
+      # here that `docker push` could even target. The run id keeps concurrent
+      # PR checks on the shared runner daemon from clobbering each other's tag.
+      env:
+        RUN_ID: ${{ github.run_id }}
+      run: |
+        echo "local=asakusa-lab-pr-check:$RUN_ID" >> "$GITHUB_OUTPUT"
+
+    - name: Build the Docker image
+      env:
+        # Through the environment rather than interpolated into the script text,
+        # same rule as everywhere else in this repo's workflows.
+        LOCAL_TAG: ${{ steps.tags.outputs.local }}
+      run: |
+        # --pull for the same reason as in image-check-publish.yml: cirunner-hatbox
+        # is self-hosted with a persistent docker daemon, so without it a stale
+        # base image could sit in the cache for months.
+        docker build --pull . --file Dockerfile --tag "$LOCAL_TAG"
+
+    - name: Smoke-test the built image
+      # There are no unit tests in this repo, so this is the whole PR gate:
+      # running inside the image checks the things a build alone cannot — that
+      # the dependencies actually installed, that app.py imports, and that the
+      # index route renders from the templates copied into the image.
+      # No port publishing — the runner does not need to reach into the
+      # container, Flask's own test client drives the app from the inside.
+      env:
+        SMOKE_TAG: ${{ steps.tags.outputs.local }}
+      run: |
+        docker run --rm --entrypoint python "$SMOKE_TAG" -c "
+        import app
+        client = app.app.test_client()
+        response = client.get('/')
+        assert response.status_code == 200, response.status_code
+        print('smoke ok:', response.status_code)
+        "
+
+    - name: Remove the built image from the runner
+      # The runner's docker daemon is persistent and shared with other repos, so
+      # every PR check would otherwise leave an image behind forever. Removes ONLY
+      # the tag this run created — no `docker system prune`.
+      # `always()` so a failed smoke still cleans up after itself.
+      if: always()
+      env:
+        LOCAL_TAG: ${{ steps.tags.outputs.local }}
+      run: |
+        docker rmi "$LOCAL_TAG" || true
