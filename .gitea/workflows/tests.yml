@@ -5,6 +5,10 @@ name: Tests
 # builds and that the app still starts, while :latest — the tag watchtower on
 # slug deploys to asakusa-lab.cc — stays untouched by PR branches.
 on:
+  # Manual re-run: without it a run that flaked on runner networking could only be
+  # retried by pushing an empty commit to the PR branch. Safe to expose here — this
+  # workflow touches no registry and no secrets, it only builds and smoke-tests.
+  workflow_dispatch:
   pull_request:
     branches: [ "main" ]
 
